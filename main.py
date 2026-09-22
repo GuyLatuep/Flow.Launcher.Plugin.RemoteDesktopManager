@@ -1,16 +1,23 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib"))
+# Flow Launcher's embeddable Python doesn't put the script's own directory on
+# sys.path by default, so local imports (rdm_bridge) and vendored deps (lib/)
+# both need to be added explicitly.
+PLUGIN_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, PLUGIN_DIR)
+sys.path.insert(0, os.path.join(PLUGIN_DIR, "lib"))
 
 from flowlauncher import FlowLauncher  # noqa: E402
 
 import rdm_bridge  # noqa: E402
 
-PLUGIN_DIR = os.path.dirname(os.path.abspath(__file__))
 CACHE_FILE = os.path.join(PLUGIN_DIR, "cache", "sessions.json")
 ICON_PATH = "assets/icon.png"
 MAX_RESULTS = 20
+
+# Folders/credential records, not connections you can actually "open".
+_NON_OPENABLE_TYPES = {"Group", "Credential"}
 
 
 def _score(query_lower, name_lower, group_lower):
@@ -52,6 +59,8 @@ class RemoteDesktopManagerPlugin(FlowLauncher):
 
         scored = []
         for session in sessions:
+            if (session.get("ConnectionType") or "") in _NON_OPENABLE_TYPES:
+                continue
             name = session.get("Name") or ""
             group = session.get("Group") or ""
             score = _score(query_lower, name.lower(), group.lower())
@@ -92,10 +101,7 @@ class RemoteDesktopManagerPlugin(FlowLauncher):
     def open_session(self, session_id):
         if not session_id:
             return
-        try:
-            rdm_bridge.open_session(session_id)
-        except rdm_bridge.RDMUnavailableError:
-            pass
+        rdm_bridge.open_session(session_id)
 
     def refresh_sessions(self):
         self._bridge.get_sessions(force_refresh=True)

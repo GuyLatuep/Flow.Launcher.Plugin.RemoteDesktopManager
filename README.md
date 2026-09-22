@@ -4,9 +4,18 @@ Search and open your [Devolutions Remote Desktop Manager](https://devolutions.ne
 
 ## Requirements
 
-- Remote Desktop Manager installed locally (the plugin drives it via its bundled PowerShell module — no separate install needed).
-- Windows PowerShell available on `PATH` (default on Windows).
+- Remote Desktop Manager installed locally.
+- [PowerShell 7+](https://aka.ms/powershell) (`pwsh`) on `PATH`. Windows PowerShell 5.1 (the version built into Windows) is *not* enough — RDM's current automation module requires PS7, and its older, PS5.1-compatible module can list sessions but fails to actually open them against recent RDM versions.
+  ```powershell
+  winget install --id Microsoft.PowerShell
+  ```
+- The [`Devolutions.PowerShell`](https://www.powershellgallery.com/packages/Devolutions.PowerShell) module:
+  ```powershell
+  Install-Module Devolutions.PowerShell -Scope CurrentUser
+  ```
 - The data source you want to search must already be open/connected in your RDM desktop app; the plugin reads whatever RDM currently has loaded.
+
+If either requirement is missing, searching will show a result explaining what to install.
 
 ## Usage
 
