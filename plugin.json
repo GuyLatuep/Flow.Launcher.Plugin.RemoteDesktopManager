@@ -1,0 +1,13 @@
+{
+  "$schema": "https://www.flowlauncher.com/schemas/plugin.schema.json",
+  "ID": "326cb4e6-1d6f-4c49-8826-bf74a91bdb96",
+  "ActionKeyword": "rdm",
+  "Name": "Remote Desktop Manager",
+  "Description": "Search and open your Devolutions Remote Desktop Manager sessions",
+  "Author": "Malte Polzin",
+  "Version": "1.0.0",
+  "Language": "python",
+  "Website": "https://github.com/polzinm/Flow.Launcher.Plugin.RemoteDesktopManager",
+  "IcoPath": "assets/icon.png",
+  "ExecuteFileName": "main.py"
+}
