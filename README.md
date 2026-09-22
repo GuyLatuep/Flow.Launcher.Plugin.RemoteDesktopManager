@@ -1,52 +1,82 @@
-# Flow Launcher Plugin: Remote Desktop Manager
+<div align="center">
 
-Search and open your [Devolutions Remote Desktop Manager](https://devolutions.net/remote-desktop-manager) (RDM) sessions from [Flow Launcher](https://www.flowlauncher.com/).
+<img src="assets/icon.png" width="96" height="96" alt="Remote Desktop Manager plugin icon" />
 
-## Requirements
+# Remote Desktop Manager for Flow Launcher
 
-- Remote Desktop Manager installed locally.
-- [PowerShell 7+](https://aka.ms/powershell) (`pwsh`) on `PATH`. Windows PowerShell 5.1 (the version built into Windows) is *not* enough — RDM's current automation module requires PS7, and its older, PS5.1-compatible module can list sessions but fails to actually open them against recent RDM versions.
-  ```powershell
-  winget install --id Microsoft.PowerShell
-  ```
-- The [`Devolutions.PowerShell`](https://www.powershellgallery.com/packages/Devolutions.PowerShell) module:
-  ```powershell
-  Install-Module Devolutions.PowerShell -Scope CurrentUser
-  ```
-- The data source you want to search must already be open/connected in your RDM desktop app; the plugin reads whatever RDM currently has loaded.
+**Search and launch your [Devolutions Remote Desktop Manager](https://devolutions.net/remote-desktop-manager) sessions without leaving your keyboard.**
 
-If either requirement is missing, searching will show a result explaining what to install.
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Flow Launcher](https://img.shields.io/badge/Flow%20Launcher-plugin-6b46c1.svg)](https://www.flowlauncher.com/)
+[![PowerShell 7+](https://img.shields.io/badge/PowerShell-7%2B-5391FE.svg?logo=powershell&logoColor=white)](https://aka.ms/powershell)
+[![Python](https://img.shields.io/badge/python-3-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
 
-## Usage
+</div>
 
-Type `rdm` followed by a search term:
+---
+
+## ✨ Overview
+
+Type `rdm` in [Flow Launcher](https://www.flowlauncher.com/), start typing a session name, and press <kbd>Enter</kbd>. That's it — no switching to the RDM window, no clicking through folders.
 
 ```
 rdm prod-db01
 ```
 
-Matching sessions are listed by name (with their RDM group/type as the subtitle). Press Enter to open the selected session in Remote Desktop Manager.
+<div align="center">
 
-Results are served from a local cache that refreshes automatically in the background every 5 minutes, so search stays fast even with a large connection list. If you don't see a session you just added, wait a few seconds or search again to trigger a refresh.
+| You type | You get |
+| :-- | :-- |
+| `rdm prod` | Every session matching *prod*, grouped by RDM folder/type |
+| <kbd>Enter</kbd> | The session opens directly in Remote Desktop Manager |
 
-## Install
+</div>
 
-Once published to the Flow Launcher Plugin Store:
+Results come from a local cache that refreshes automatically every **5 minutes**, so search stays instant even with large connection lists. Just added a session? Wait a few seconds or search again to trigger a refresh.
+
+---
+
+## 📋 Requirements
+
+| Requirement | Notes |
+| :-- | :-- |
+| 🖥️ **Remote Desktop Manager** | Installed locally, with the data source you want to search already open/connected in the RDM desktop app |
+| 🐚 **[PowerShell 7+](https://aka.ms/powershell)** (`pwsh`) on `PATH` | Windows PowerShell 5.1 is *not* enough — its RDM module can list sessions but fails to open them against recent RDM versions |
+| 📦 **[`Devolutions.PowerShell`](https://www.powershellgallery.com/packages/Devolutions.PowerShell)** module | Install with the command below |
+
+```powershell
+winget install --id Microsoft.PowerShell
+Install-Module Devolutions.PowerShell -Scope CurrentUser
+```
+
+> If either requirement is missing, searching will show a result explaining what to install.
+
+---
+
+## 🚀 Install
+
+**From the Flow Launcher Plugin Store** *(once published)*:
 
 ```
 pm install Remote Desktop Manager
 ```
 
-For manual/dev installation, copy this folder into `%APPDATA%\FlowLauncher\Plugins\` and restart Flow Launcher.
+**Manually / for development:**
 
-## Development
+Copy this folder into `%APPDATA%\FlowLauncher\Plugins\` and restart Flow Launcher.
+
+---
+
+## 🛠️ Development
 
 ```powershell
 python -m pip install -r requirements.txt -t .\lib
 ```
 
-Then copy/symlink the project folder into `%APPDATA%\FlowLauncher\Plugins\` and restart Flow Launcher to test changes.
+Then copy or symlink the project folder into `%APPDATA%\FlowLauncher\Plugins\` and restart Flow Launcher to test changes.
 
-## License
+---
 
-MIT — see [LICENSE](LICENSE).
+## 📄 License
+
+Released under the [MIT License](LICENSE).
