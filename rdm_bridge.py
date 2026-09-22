@@ -32,8 +32,10 @@ _REFRESH_LOCK_TTL_SECONDS = 20
 # Windows by default so no extra flag is needed for that. DETACHED_PROCESS
 # additionally strips the window station, which the RDM PowerShell module
 # needs (it's backed by RDM's WPF engine) -- combining the two makes RDM
-# cmdlets fail silently, so CREATE_NO_WINDOW alone is used here.
-_DETACHED_FLAGS = subprocess.CREATE_NO_WINDOW
+# cmdlets fail silently, so CREATE_NO_WINDOW alone is used here. The flag only
+# exists on Windows; default to 0 elsewhere so this module can still be
+# imported (e.g. by the test suite) on macOS/Linux dev machines and CI.
+_DETACHED_FLAGS = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 
 # Plain PowerShell (no Python .format placeholders) -- kept separate so its
 # literal `{`/`}` never has to be escaped for str.format/f-strings.
