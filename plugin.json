@@ -7,7 +7,7 @@
   "Author": "Malte Polzin",
   "Version": "1.0.0",
   "Language": "python",
-  "Website": "https://github.com/polzinm/Flow.Launcher.Plugin.RemoteDesktopManager",
+  "Website": "https://github.com/GuyLatuep/Flow.Launcher.Plugin.RemoteDesktopManager",
   "IcoPath": "assets/icon.png",
   "ExecuteFileName": "main.py"
 }
