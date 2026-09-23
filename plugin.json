@@ -5,7 +5,7 @@
   "Name": "Remote Desktop Manager",
   "Description": "Search and open your Devolutions Remote Desktop Manager sessions",
   "Author": "Malte Polzin",
-  "Version": "1.0.0",
+  "Version": "1.0.1",
   "Language": "python",
   "Website": "https://github.com/GuyLatuep/Flow.Launcher.Plugin.RemoteDesktopManager",
   "IcoPath": "assets/icon.png",

@@ -18,6 +18,12 @@ sessions, but its Open-RDMSession call times out against current RDM
 versions (verified against RDM 2026.2.18.0) -- likely an IPC protocol
 mismatch, since that module hasn't been updated since 2023. So this plugin
 requires pwsh + Devolutions.PowerShell rather than trying to support both.
+
+Open-RDMSession's -Silent switch makes it fall back to opening the session
+in the native Windows RDP client (mstsc) instead of RDM's own built-in
+viewer, even for a session a plain UI double-click opens embedded (verified
+empirically -- window visibility/hiding was a red herring during
+debugging; -Silent was the actual cause). So -Silent is simply not passed.
 """
 import json
 import os
@@ -63,10 +69,16 @@ def _build_refresh_script(cache_file, lock_file):
 
 
 def _build_open_session_script(session_id):
+    # No -Silent: empirically, Open-RDMSession -Silent falls back to
+    # launching the native Windows RDP client (mstsc) instead of RDM's own
+    # embedded viewer, even for a session a plain UI double-click opens
+    # embedded. Without -Silent it correctly uses RDM's embedded viewer.
+    # Any credential/confirmation prompt RDM needs shows in RDM's own
+    # window, independent of this (hidden, non-interactive) process.
     return (
         "$ErrorActionPreference = 'Stop'\n"
         + _IMPORT_SNIPPET +
-        f"Open-RDMSession -ID '{session_id}' -Silent\n"
+        f"Open-RDMSession -ID '{session_id}'\n"
     )
 
 
